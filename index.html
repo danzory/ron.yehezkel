@@ -1,0 +1,574 @@
+import React, { useState } from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, Legend } from 'recharts';
+import { Dumbbell, Utensils, Activity, Calendar, Trophy, ChevronDown, ChevronUp, User, CheckCircle, PlayCircle, ExternalLink, Info, Droplet, Cookie } from 'lucide-react';
+
+const FitnessApp = () => {
+  const [activeTab, setActiveTab] = useState('workouts');
+  const [expandedExercise, setExpandedExercise] = useState(null);
+
+  // --- אזור הזנת נתונים (ערוך כאן) ---
+
+  const clientProfile = {
+    name: "רון יחזקאל",
+    goal: "עלייה במסת שריר",
+    startDate: "25.1",
+    status: "פעיל"
+  };
+
+  const workoutData = {
+    programName: "תוכנית אימונים - 6 ימים (PPL/Upper-Lower Hybrid)",
+    description: "רקע לבלוק הנוכחי: בבלוק זה אנו עובדים בשיטת 'סטים קבועים' (Straight Sets). המשמעות היא עבודה עם משקל זהה בכל הסטים של התרגיל. המטרה היא לשאוף להתקדם בכמות החזרות מאימון לאימון עם אותו המשקל, עד להגעה ליעד החזרות העליון בכל הסטים.\n\nלדוגמה: אם בפשיטת ברכיים משקל העבודה הוא 70 ק״ג, נבצע את כל הסטים במשקל זה וננסה בכל אימון להוסיף חזרות. ברגע שהצלחתם לבצע את כל הסטים בטווח העליון (למשל 10 חזרות) – סימן שהגיע הזמן להעלות משקל.\n\nזכרו: גם אם אין עלייה בכל אימון, זהו חלק טבעי מהתהליך. ההתמדה והנחישות בכל סט הן שיביאו את התוצאות!",
+    tips: [
+      "לבצע חימום ספציפי כראוי בכל תרגיל, במיוחד בתרגילים מורכבים עם שרירים רבים.",
+      "לשתות מים במהלך כל האימון למניעת התייבשות ופציעות.",
+      "לאכול היטב לפני האימון למיקסום אנרגיה (מומלץ לקחת תמר או בננה ליתר ביטחון).",
+      "לבצע 'ברייס' (Bracing) בכל תרגיל לשמירה על טכניקה נכונה ועמידות.",
+      "לנוח מספיק זמן בין הסטים - לא למהר, ההתאוששות חשובה.",
+      "לבצע חזרות איכותיות עם כוונה מלאה, לא רק כדי 'לסיים את הסט'."
+    ],
+    splits: [
+      {
+        id: 'UPPER1',
+        name: 'UPPER 1 - פלג גוף עליון (BACK FOCUS)',
+        exercises: [
+          { name: 'פולי עליון רחב', sets: '3', reps: '6-10', rest: '', note: '' },
+          { name: 'חתירה רחבה', sets: '3', reps: '6-10', rest: '', note: '' },
+          { name: 'פרפר', sets: '3', reps: '6-12', rest: '', note: '' },
+          { name: 'הרחקות לכתפיים', sets: '2', reps: '6-12', rest: '', note: '' },
+          { name: 'כפיפה בכומר (מוט W)', sets: '2', reps: '6-12', rest: '', note: '' },
+          { name: 'קלסו שראגס', sets: '2', reps: '6-12', rest: '', note: '' },
+        ]
+      },
+      {
+        id: 'LOWER1',
+        name: 'LOWER 1 - פלג גוף תחתון (QUADS FOCUS)',
+        exercises: [
+          { name: 'סקוואט בסמית', sets: '3', reps: '5-10', rest: '', note: '' },
+          { name: 'פשיטות ברכיים', sets: '3', reps: '6-12', rest: '', note: '' },
+          { name: 'דדליפט רומני (משקולות)', sets: '2', reps: '6-12', rest: '', note: '' },
+          { name: 'כפיפות ברכיים', sets: '2', reps: '6-12', rest: '', note: '' },
+          { name: 'תאומים', sets: '3', reps: '6-12', rest: '', note: '' },
+        ]
+      },
+      {
+        id: 'UPPER2',
+        name: 'UPPER 2 - פלג גוף עליון (CHEST & TRICEP FOCUS)',
+        exercises: [
+          { name: 'לחיצת חזה במכונה (אחיזה ניטרלית)', sets: '3', reps: '6-20', rest: '', note: '' },
+          { name: 'פרפר', sets: '2', reps: '6-12', rest: '', note: '' },
+          { name: 'חתירה רחבה', sets: '2', reps: '6-12', rest: '', note: '' },
+          { name: 'הרחקות כתפיים בפולי', sets: '3', reps: '6-12', rest: '', note: '' },
+          { name: 'פולי עליון (מכונה)', sets: '2', reps: '6-12', rest: '', note: '' },
+          { name: 'מוחץ גולגולת (Skullcrushers)', sets: '3', reps: '6-12', rest: '', note: '' },
+        ]
+      },
+      {
+        id: 'LOWER2',
+        name: 'LOWER 2 - פלג גוף תחתון (HAMS & GLUTES FOCUS)',
+        exercises: [
+          { name: 'דדליפט רומני', sets: '2', reps: '6-12', rest: '', note: '' },
+          { name: 'פשיטות ברכיים', sets: '3', reps: '6-12', rest: '', note: '' },
+          { name: 'כפיפות ברכיים', sets: '2', reps: '6-12', rest: '', note: '' },
+          { name: 'לחיצת רגליים', sets: '2', reps: '6-12', rest: '', note: '' },
+          { name: 'מקרבים (Adductors)', sets: '2', reps: '6-12', rest: '', note: '' },
+          { name: 'תאומים', sets: '3', reps: '6-12', rest: '', note: '' },
+        ]
+      },
+      {
+        id: 'UPPER3',
+        name: 'UPPER 3 - פלג גוף עליון (DELTS & GUNS FOCUS)',
+        exercises: [
+          { name: 'לחיצת כתפיים בסמית', sets: '3', reps: '6-12', rest: '', note: '' },
+          { name: 'הרחקות כתפיים (להישען על ספסל)', sets: '2', reps: '6-12', rest: '', note: '' },
+          { name: 'פרפר', sets: '3', reps: '6-12', rest: '', note: '' },
+          { name: 'חתירה צרה (יד יד)', sets: '2', reps: '6-12', rest: '', note: '' },
+          { name: 'קלסו שראגס', sets: '2', reps: '6-12', rest: '', note: '' },
+          { name: 'כפיפת פטישים (ישיבה בשיפוע אחורי)', sets: '2', reps: '6-12', rest: '', note: '' },
+        ]
+      },
+      {
+        id: 'LOWER3',
+        name: 'LOWER 3 - פלג גוף תחתון (LEGS FOCUS)',
+        exercises: [
+          { name: 'סקוואט בולגרי', sets: '2', reps: '6-12', rest: '', note: '' },
+          { name: 'פשיטות ברכיים', sets: '2', reps: '6-12', rest: '', note: '' },
+          { name: 'דדליפט רומני (מוט)', sets: '2', reps: '6-12', rest: '', note: '' },
+          { name: 'כפיפות ברכיים', sets: '2', reps: '6-12', rest: '', note: '' },
+          { name: 'תאומים', sets: '3', reps: '6-12', rest: '', note: '' },
+        ]
+      }
+    ]
+  };
+
+  const nutritionData = {
+    dailyCalories: 2240,
+    dailyProtein: 189,
+    dailyCarbs: 287,
+    dailyFat: 35,
+    meals: [
+      { 
+        name: 'ארוחה 1', 
+        time: 'מומלץ לפני אימון', 
+        items: [
+          '3 ביצים L + טונה / קוטג\' (2/3 חבילה)',
+          'פיתות כוסמין (200 גרם)', 
+          'טחינה (10 גרם) / אבוקדו (25 גרם) / שקדים (10 גרם)'
+        ], 
+        calories: 950, 
+      },
+      { 
+        name: 'ארוחה 2', 
+        time: '', 
+        items: [
+          'חזה עוף (200 גרם) / דג לבן (220 גרם) / בשר רזה/סלמון (180 גרם)',
+          'אורז (500 גרם) / בטטה/תפוח אדמה/בורגול (550 גרם)',
+          'סלט - מגוון צבעים! (400 גרם)'
+        ], 
+        calories: 1025, 
+      },
+      { 
+        name: 'ארוחה 3', 
+        time: '', 
+        items: [
+          '2 יוגורטים חלבון / סקופ וחצי אבקת חלבון / 2 חטיפי חלבון',
+          'תפוח / פרי אחר'
+        ], 
+        calories: 265, 
+      }
+    ],
+    // הפרדנו את סעיף התדלוק מהדגשים הרגילים
+    treatsAllowance: {
+        calories: 150,
+        text: "לכל מה שלא חלק מהתפריט (רטבים, מתוק, חלבון נוסף)."
+    },
+    guidelines: [
+      "ניתן להחליף מוצרים בתוך אותה קטגוריה בתפריט.",
+      "מומלץ לאכול את ארוחה 1 לפני אימון.",
+      "לשמור על מרווח של כמה שעות בין כל ארוחה.",
+      "להשתמש בספריי שמן אם מטגנים.",
+      "אם אתה אוכל בחוץ, בחר משהו שנראה כמו בתפריט.",
+      "יש להגיע לכמות החלבון הנדרשת!",
+      "ירקות מומלצים מכל הצבעים.",
+      "עד 50 גרם רטבים.",
+      "תבלינים באופן חופשי.",
+      "שתייה - רק זירו. לפחות 2 ליטר מים ביום.",
+      "סדר הארוחות אינו משנה."
+    ]
+  };
+
+  // אזור סרטוני הדרכה - כרגע ריק להזנה עתידית
+  const videosData = [];
+
+  const progressData = {
+    // נתונים לגרפים - יתמלאו כשהמתאמן יזין או כשתזין עבורו
+    weight: [
+      { date: '25.1', weight: 75.0 }, 
+    ],
+    strength: [
+      { exercise: 'סקוואט', prev: 100, current: 100 },
+    ]
+  };
+
+  // --- סוף אזור הזנת נתונים ---
+
+  const toggleExercise = (index) => {
+    setExpandedExercise(expandedExercise === index ? null : index);
+  };
+
+  // רכיב כרטיס תרגיל
+  const ExerciseCard = ({ exercise, index }) => (
+    <div className="bg-slate-800 rounded-xl mb-3 overflow-hidden border border-slate-700 shadow-sm">
+      <div 
+        className="p-4 flex justify-between items-center cursor-pointer"
+        onClick={() => toggleExercise(index)}
+      >
+        <div className="flex items-center gap-3">
+          <div className="bg-blue-500/20 p-2 rounded-lg text-blue-400">
+            <Dumbbell size={20} />
+          </div>
+          <div>
+            <h4 className="font-bold text-slate-100">{exercise.name || 'תרגיל חדש'}</h4>
+            <p className="text-xs text-slate-400">
+              <span className="text-orange-400 font-bold">{exercise.sets} סטים</span> | {exercise.reps} חזרות
+            </p>
+          </div>
+        </div>
+        {expandedExercise === index ? <ChevronUp size={20} className="text-slate-400" /> : <ChevronDown size={20} className="text-slate-400" />}
+      </div>
+      
+      {expandedExercise === index && (
+        <div className="px-4 pb-4 pt-0 bg-slate-800/50">
+          <div className="h-px w-full bg-slate-700 mb-3"></div>
+          <div className="grid grid-cols-2 gap-4 text-sm mb-3">
+            <div>
+              <span className="text-slate-500 block text-xs">מנוחה</span>
+              <span className="text-slate-200">{exercise.rest}</span>
+            </div>
+            {exercise.note && (
+              <div className="col-span-2 bg-yellow-500/10 p-2 rounded border border-yellow-500/20">
+                <span className="text-yellow-500 block text-xs font-bold mb-1">הוראות ביצוע:</span>
+                <span className="text-slate-200">{exercise.note}</span>
+              </div>
+            )}
+          </div>
+          <button className="w-full py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-sm text-slate-300 transition-colors flex items-center justify-center gap-2">
+            <CheckCircle size={16} />
+             סימון כבוצע
+          </button>
+        </div>
+      )}
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans" dir="rtl">
+      
+      {/* Header */}
+      <header className="bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 border-b border-slate-800">
+        <div className="max-w-md mx-auto px-4 py-4 flex justify-between items-center">
+          <div>
+            <h1 className="text-lg font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+              Coach PRO
+            </h1>
+            <p className="text-sm text-slate-200 font-medium">היי, {clientProfile.name}</p>
+          </div>
+          <div className="flex items-center gap-3">
+             <div className="text-left hidden sm:block">
+                <p className="text-[10px] text-slate-400 uppercase tracking-wider">מטרה נוכחית</p>
+                <p className="text-xs font-bold text-emerald-400">{clientProfile.goal}</p>
+             </div>
+             <div className="h-10 w-10 bg-slate-800 rounded-full flex items-center justify-center border border-slate-700 relative">
+               <User size={20} className="text-slate-300" />
+               <div className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full"></div>
+             </div>
+          </div>
+        </div>
+        
+        {/* Navigation Tabs */}
+        <div className="max-w-md mx-auto px-2 flex justify-between pb-2 overflow-x-auto">
+          <button 
+            onClick={() => setActiveTab('workouts')}
+            className={`flex flex-col items-center gap-1 p-2 min-w-[70px] rounded-xl transition-all ${activeTab === 'workouts' ? 'text-blue-400 bg-blue-500/10' : 'text-slate-500'}`}
+          >
+            <Dumbbell size={20} />
+            <span className="text-[10px] font-medium">אימונים</span>
+          </button>
+          
+          <button 
+            onClick={() => setActiveTab('nutrition')}
+            className={`flex flex-col items-center gap-1 p-2 min-w-[70px] rounded-xl transition-all ${activeTab === 'nutrition' ? 'text-emerald-400 bg-emerald-500/10' : 'text-slate-500'}`}
+          >
+            <Utensils size={20} />
+            <span className="text-[10px] font-medium">תזונה</span>
+          </button>
+          
+          <button 
+            onClick={() => setActiveTab('progress')}
+            className={`flex flex-col items-center gap-1 p-2 min-w-[70px] rounded-xl transition-all ${activeTab === 'progress' ? 'text-purple-400 bg-purple-500/10' : 'text-slate-500'}`}
+          >
+            <Activity size={20} />
+            <span className="text-[10px] font-medium">התקדמות</span>
+          </button>
+
+          <button 
+            onClick={() => setActiveTab('videos')}
+            className={`flex flex-col items-center gap-1 p-2 min-w-[70px] rounded-xl transition-all ${activeTab === 'videos' ? 'text-orange-400 bg-orange-500/10' : 'text-slate-500'}`}
+          >
+            <PlayCircle size={20} />
+            <span className="text-[10px] font-medium">הדרכות</span>
+          </button>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <main className="max-w-md mx-auto p-4 pb-24">
+
+        {/* Info Banner Mobile (Visible only on top of workouts) */}
+        {activeTab === 'workouts' && (
+             <div className="bg-slate-900 rounded-lg p-3 border border-slate-800 mb-4 flex items-center justify-between">
+                <div>
+                   <p className="text-xs text-slate-500">יעד מתאריך {clientProfile.startDate}</p>
+                   <p className="text-sm font-bold text-emerald-400">{clientProfile.goal}</p>
+                </div>
+                <Trophy size={16} className="text-yellow-500/50" />
+             </div>
+        )}
+        
+        {/* Workouts View */}
+        {activeTab === 'workouts' && (
+          <div className="space-y-6 animate-in fade-in zoom-in duration-300">
+            <div className="bg-blue-600 rounded-2xl p-5 shadow-lg shadow-blue-900/20 relative overflow-hidden">
+              <div className="relative z-10">
+                <span className="text-blue-200 text-xs font-bold tracking-wider uppercase">תוכנית נוכחית</span>
+                <h2 className="text-2xl font-bold text-white mt-1">{workoutData.programName}</h2>
+                <p className="text-blue-100 text-xs mt-2 leading-relaxed bg-blue-700/30 p-2 rounded-lg border border-blue-500/30 whitespace-pre-line">
+                  <Info size={12} className="inline ml-1" />
+                  {workoutData.description}
+                </p>
+              </div>
+              <Dumbbell className="absolute -bottom-4 -left-4 text-white/10 w-32 h-32 transform rotate-12" />
+            </div>
+
+            {/* General Guidelines Section */}
+            <div className="bg-slate-800 rounded-xl p-4 border border-slate-700">
+              <h3 className="font-bold text-slate-200 mb-3 flex items-center gap-2">
+                <CheckCircle size={18} className="text-emerald-400" />
+                דגשים כלליים לאימון
+              </h3>
+              <ul className="space-y-2">
+                {workoutData.tips.map((tip, i) => (
+                  <li key={i} className="text-sm text-slate-400 flex gap-2 items-start">
+                    <span className="text-emerald-500 font-bold mt-1">•</span>
+                    <span className="leading-relaxed">{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {workoutData.splits.map((split) => (
+              <div key={split.id} className="mb-6">
+                <h3 className="text-lg font-bold text-slate-200 mb-3 flex items-center gap-2">
+                  <span className="w-1 h-6 bg-blue-500 rounded-full"></span>
+                  {split.name}
+                </h3>
+                <div>
+                  {split.exercises.map((ex, idx) => (
+                    <ExerciseCard key={idx} exercise={ex} index={`${split.id}-${idx}`} />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Nutrition View */}
+        {activeTab === 'nutrition' && (
+          <div className="space-y-6 animate-in fade-in zoom-in duration-300">
+            {/* Macros Summary - Expanded to show Carbs/Fat */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 text-center relative overflow-hidden">
+                <div className="relative z-10">
+                    <span className="text-slate-400 text-xs">יעד קלורי</span>
+                    <div className="text-2xl font-bold text-emerald-400">{nutritionData.dailyCalories}</div>
+                </div>
+                <div className="absolute top-0 right-0 w-12 h-12 bg-emerald-500/10 rounded-bl-3xl"></div>
+              </div>
+              <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 text-center relative overflow-hidden">
+                <div className="relative z-10">
+                    <span className="text-slate-400 text-xs">חלבון (g)</span>
+                    <div className="text-2xl font-bold text-blue-400">{nutritionData.dailyProtein}</div>
+                </div>
+                <div className="absolute top-0 right-0 w-12 h-12 bg-blue-500/10 rounded-bl-3xl"></div>
+              </div>
+              
+              <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 text-center relative overflow-hidden">
+                 <div className="relative z-10">
+                    <span className="text-slate-400 text-xs">פחמימה (g)</span>
+                    <div className="text-xl font-bold text-orange-400">{nutritionData.dailyCarbs}</div>
+                 </div>
+              </div>
+              <div className="bg-slate-800 p-4 rounded-xl border border-slate-700 text-center relative overflow-hidden">
+                 <div className="relative z-10">
+                    <span className="text-slate-400 text-xs">שומן (g)</span>
+                    <div className="text-xl font-bold text-yellow-400">{nutritionData.dailyFat}</div>
+                 </div>
+              </div>
+            </div>
+
+            {/* Meals List */}
+            <div className="space-y-4">
+              {nutritionData.meals.map((meal, idx) => (
+                <div key={idx} className="bg-slate-800 rounded-xl border border-slate-700 p-4 relative overflow-hidden">
+                  <div className="flex justify-between items-start mb-3 relative z-10">
+                    <div>
+                      <h4 className="font-bold text-slate-100">{meal.name}</h4>
+                      {meal.time && <p className="text-xs text-emerald-400 font-medium">{meal.time}</p>}
+                    </div>
+                    <div className="text-right">
+                      <span className="block text-sm font-bold text-slate-200">~{meal.calories} קלוריות</span>
+                    </div>
+                  </div>
+                  
+                  {meal.items.length > 0 ? (
+                    <ul className="text-sm text-slate-400 space-y-2 bg-slate-900/50 p-3 rounded-lg relative z-10">
+                      {meal.items.map((item, i) => (
+                        <li key={i} className="flex items-start gap-2">
+                          <div className="w-1.5 h-1.5 bg-slate-600 rounded-full mt-1.5 shrink-0"></div>
+                          <span className="leading-tight">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <div className="text-xs text-slate-500 italic p-2 bg-slate-900/30 rounded">
+                      טרם הוזן תפריט לארוחה זו
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Treats Allowance - Highlighted Separately */}
+            <div className="bg-gradient-to-r from-pink-900/40 to-purple-900/40 border border-pink-500/30 p-4 rounded-xl flex items-start gap-4 shadow-sm mt-4">
+                <div className="bg-pink-500/20 p-2 rounded-lg mt-1 shrink-0">
+                   <Cookie size={24} className="text-pink-400" />
+                </div>
+                <div>
+                    <h4 className="font-bold text-pink-100 text-lg">תדלוק ושטויות</h4>
+                    <p className="text-sm text-slate-300 mt-1">
+                        מותר לחרוג עד <span className="font-bold text-pink-400 text-base">{nutritionData.treatsAllowance.calories} קלוריות</span> ביום.
+                        <br/>
+                        <span className="text-xs text-slate-400">{nutritionData.treatsAllowance.text}</span>
+                    </p>
+                </div>
+            </div>
+
+            {/* Guidelines Section */}
+            <div className="bg-slate-800 p-5 rounded-xl border border-slate-700 mt-4">
+                <h4 className="font-bold text-slate-200 mb-4 flex items-center gap-2">
+                    <Droplet size={18} className="text-blue-400" />
+                    דגשים וכללי ברזל
+                </h4>
+                <ul className="space-y-3">
+                    {nutritionData.guidelines.map((line, i) => (
+                        <li key={i} className="text-sm text-slate-400 flex gap-3 items-start">
+                            <span className="text-blue-500 mt-1 font-bold">•</span>
+                            <span className="leading-relaxed">{line}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+          </div>
+        )}
+
+        {/* Progress View */}
+        {activeTab === 'progress' && (
+          <div className="space-y-8 animate-in fade-in zoom-in duration-300">
+            
+            {/* Weight Chart */}
+            <div className="bg-slate-800 p-4 rounded-xl border border-slate-700">
+              <h3 className="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
+                <Activity size={20} className="text-purple-400" />
+                מעקב משקל גוף
+              </h3>
+              <div className="h-64 w-full flex items-center justify-center">
+                {progressData.weight.length > 1 ? (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={progressData.weight}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                      <XAxis dataKey="date" stroke="#94a3b8" fontSize={12} />
+                      <YAxis domain={['dataMin - 1', 'dataMax + 1']} stroke="#94a3b8" fontSize={12} />
+                      <Tooltip 
+                        contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px' }}
+                        itemStyle={{ color: '#fff' }}
+                      />
+                      <Line type="monotone" dataKey="weight" stroke="#a855f7" strokeWidth={3} dot={{ r: 4, fill: '#a855f7' }} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <div className="text-center">
+                    <p className="text-slate-500 text-sm mb-2">נתון התחלתי: {progressData.weight[0].weight} ק"ג</p>
+                    <p className="text-slate-600 text-xs">המשך להזין שקילות כדי לראות גרף</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Strength Chart */}
+            <div className="bg-slate-800 p-4 rounded-xl border border-slate-700">
+              <h3 className="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
+                <Trophy size={20} className="text-yellow-400" />
+                שיפור משקלי עבודה (ק"ג)
+              </h3>
+              <div className="h-64 w-full flex items-center justify-center">
+                 {progressData.strength.length > 0 && progressData.strength[0].prev > 0 ? (
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={progressData.strength}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
+                      <XAxis dataKey="exercise" stroke="#94a3b8" fontSize={12} />
+                      <YAxis stroke="#94a3b8" fontSize={12} />
+                      <Tooltip 
+                        cursor={{fill: '#334155', opacity: 0.4}}
+                        contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px' }}
+                      />
+                      <Legend />
+                      <Bar dataKey="prev" name="חודש קודם" fill="#475569" radius={[4, 4, 0, 0]} />
+                      <Bar dataKey="current" name="נוכחי" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                 ) : (
+                   <p className="text-slate-500 text-sm">הזן נתונים כדי לראות התקדמות</p>
+                 )}
+              </div>
+            </div>
+            
+            {/* Weekly Summary Card */}
+            <div className="bg-gradient-to-br from-slate-800 to-slate-900 p-5 rounded-xl border border-slate-700">
+              <h4 className="text-slate-300 font-medium mb-2">סיכום שבועי</h4>
+              <div className="flex justify-between items-end">
+                <div>
+                  <div className="text-3xl font-bold text-white">0/0</div>
+                  <div className="text-xs text-slate-500">אימונים הושלמו</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-3xl font-bold text-slate-500">--</div>
+                  <div className="text-xs text-slate-500">ק"ג השבוע</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        )}
+
+        {/* Videos View (New Tab) */}
+        {activeTab === 'videos' && (
+          <div className="space-y-6 animate-in fade-in zoom-in duration-300">
+             <div className="bg-orange-600 rounded-2xl p-5 shadow-lg shadow-orange-900/20 relative overflow-hidden">
+              <div className="relative z-10">
+                <span className="text-orange-200 text-xs font-bold tracking-wider uppercase">ספריית VOD</span>
+                <h2 className="text-2xl font-bold text-white mt-1">הדרכות טכניקה</h2>
+                <p className="text-orange-100 text-sm mt-2 opacity-90">דגשים לביצוע נכון ומניעת פציעות</p>
+              </div>
+              <PlayCircle className="absolute -bottom-4 -left-4 text-white/10 w-32 h-32 transform rotate-12" />
+            </div>
+
+            <div className="space-y-3">
+              {videosData.map((video, idx) => (
+                <a 
+                  key={idx} 
+                  href={video.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="block bg-slate-800 p-4 rounded-xl border border-slate-700 hover:border-orange-500/50 transition-colors group"
+                >
+                  <div className="flex justify-between items-start">
+                    <div className="flex gap-4">
+                      <div className="bg-slate-900 h-12 w-12 rounded-lg flex items-center justify-center group-hover:bg-orange-500/10 transition-colors">
+                        <PlayCircle size={24} className="text-orange-500" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-slate-100 group-hover:text-orange-400 transition-colors">{video.title}</h4>
+                        <span className="text-xs text-slate-500 bg-slate-900 px-2 py-0.5 rounded-full mt-1 inline-block">
+                          {video.category}
+                        </span>
+                      </div>
+                    </div>
+                    <ExternalLink size={16} className="text-slate-500 group-hover:text-orange-400" />
+                  </div>
+                </a>
+              ))}
+              
+              {videosData.length === 0 && (
+                 <div className="text-center py-10">
+                    <p className="text-slate-500">אין סרטונים זמינים כרגע</p>
+                 </div>
+              )}
+            </div>
+          </div>
+        )}
+
+      </main>
+    </div>
+  );
+};
+
+export default FitnessApp;
