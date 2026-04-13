@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -210,7 +211,31 @@
                 { date: '25.1', weight: 75.0 }, 
             ],
             strength: [
-                { exercise: 'סקוואט', prev: 100, current: 100 },
+                { exercise: 'פולי עליון רחב', prev: 80, current: 85 },
+                { exercise: 'חתירה רחבה', prev: 52.5, current: 60 },
+                { exercise: 'פרפר', prev: 30, current: 32.5 },
+                { exercise: 'הרחקות כתפיים', prev: 7.5, current: 12 },
+                { exercise: 'כפיפה בכומר', prev: 12.5, current: 12.5 },
+                { exercise: 'קלסו שראגס', prev: 12.5, current: 15 },
+                { exercise: 'סקוואט', prev: 25, current: 30 },
+                { exercise: 'פשיטת ברכיים', prev: 70, current: 92.5 },
+                { exercise: 'רומני משקולות', prev: 24, current: 27.5 },
+                { exercise: 'כפיפות ברכיים', prev: 55, current: 65 },
+                { exercise: 'תאומים', prev: 160, current: 180 },
+                { exercise: 'לחיצת חזה בכבלים', prev: 24.8, current: 31.5 },
+                { exercise: 'הרחקות פולי', prev: 7.5, current: 7.5 },
+                { exercise: 'פולי מכונה', prev: 75, current: 85 },
+                { exercise: 'מוחץ גולגולות', prev: 12.5, current: 17.5 },
+                { exercise: 'בטן מכונה', prev: 45, current: 45 },
+                { exercise: 'רומני מוט', prev: 20, current: 40 },
+                { exercise: 'לחיצת רגליים', prev: 90, current: 105 },
+                { exercise: 'מקרבים', prev: 50, current: 70 },
+                { exercise: 'כתפיים סמית', prev: 20, current: 22.5 },
+                { exercise: 'חתירה צרה', prev: 25, current: 30 },
+                { exercise: 'כפיפת פטישים', prev: 10, current: 16 },
+                { exercise: 'סקוואט בולגרי', prev: 15, current: 20 },
+                { exercise: 'דדליפט רומני', prev: 35, current: 40 },
+                { exercise: 'בטן פלטות', prev: 15, current: 15 }
             ]
         };
 
@@ -218,6 +243,7 @@
         let activeTab = 'workouts';
         let expandedExercise = null;
         let chartsInstance = [];
+        let selectedProgressExercise = progressData.strength[0]?.exercise || '';
 
         // --- פונקציות עזר ורינדור ---
 
@@ -234,6 +260,57 @@
                 expandedExercise = index;
             }
             render();
+        }
+
+        function updateExerciseDetails(exName) {
+            selectedProgressExercise = exName;
+            const exProgress = progressData.strength.find(d => d.exercise === exName);
+            if (!exProgress) return;
+            
+            // חיפוש יעד הסטים והחזרות מהתוכנית לתרגיל הנבחר
+            let targetSets = '-';
+            let targetReps = '-';
+            for (const split of workoutData.splits) {
+                // בדיקה גמישה כדי להתאים גם אם קיצרנו שמות
+                const found = split.exercises.find(e => e.name === exName || exName.includes(e.name) || e.name.includes(exName));
+                if (found) {
+                    targetSets = found.sets;
+                    targetReps = found.reps;
+                    break;
+                }
+            }
+
+            const container = document.getElementById('exerciseDetailsContent');
+            if(container) {
+                container.innerHTML = `
+                    <div class="grid grid-cols-2 gap-3 mb-3 mt-2">
+                        <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                            <span class="block text-xs text-slate-500 mb-1">משקל התחלה</span>
+                            <span class="text-lg font-bold text-slate-300">${exProgress.prev} ק"ג</span>
+                        </div>
+                        <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                            <span class="block text-xs text-blue-400 mb-1">שיא משקל נוכחי</span>
+                            <span class="text-lg font-bold text-blue-400">${exProgress.current} ק"ג</span>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700/50 mb-3">
+                        <span class="block text-xs text-slate-500 mb-1">יעד בתוכנית (סטים × חזרות)</span>
+                        <span class="text-md font-medium text-slate-200 flex items-center gap-2">
+                            <i data-lucide="target" class="w-4 h-4 text-emerald-400"></i>
+                            ${targetSets} סטים | ${targetReps} חזרות
+                        </span>
+                    </div>
+                    <div class="bg-slate-900/50 p-3 rounded-lg border border-slate-700/50">
+                        <span class="block text-xs text-slate-500 mb-2">פירוט ביצוע אחרון (תבנית למילוי)</span>
+                        <div class="text-sm text-slate-400 italic font-mono bg-slate-950 p-2 rounded border border-slate-800">
+                            סט 1: ${exProgress.current} ק"ג × __ חזרות <br>
+                            סט 2: ${exProgress.current} ק"ג × __ חזרות <br>
+                            סט 3: ${exProgress.current} ק"ג × __ חזרות
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons(); // טעינת האייקון החדש שנוסף
+            }
         }
 
         function renderHeader() {
@@ -489,8 +566,8 @@
                         <i data-lucide="trophy" class="w-5 h-5 text-yellow-400"></i>
                         שיפור משקלי עבודה (ק"ג)
                     </h3>
-                    <div class="h-64 w-full flex items-center justify-center">
-                        ${progressData.strength.length > 0 && progressData.strength[0].prev > 0 ? `
+                    <div class="h-[800px] w-full flex items-center justify-center">
+                        ${progressData.strength.length > 0 ? `
                             <canvas id="strengthChart"></canvas>
                         ` : `
                             <p class="text-slate-500 text-sm">הזן נתונים כדי לראות התקדמות</p>
@@ -498,6 +575,23 @@
                     </div>
                 </div>
                 
+                <!-- SECTION START: פירוט לפי תרגיל -->
+                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                    <h3 class="text-lg font-bold text-slate-200 mb-3 flex items-center gap-2">
+                        <i data-lucide="search" class="w-5 h-5 text-blue-400"></i>
+                        פירוט לפי תרגיל
+                    </h3>
+                    
+                    <select id="exerciseSelect" onchange="updateExerciseDetails(this.value)" class="w-full bg-slate-900 border border-slate-700 text-slate-200 rounded-lg p-3 mb-2 focus:outline-none focus:border-blue-500 cursor-pointer">
+                        ${progressData.strength.map(d => `<option value="${d.exercise}" ${d.exercise === selectedProgressExercise ? 'selected' : ''}>${d.exercise}</option>`).join('')}
+                    </select>
+                    
+                    <div id="exerciseDetailsContent">
+                        <!-- Content injected via JS -->
+                    </div>
+                </div>
+                <!-- SECTION END -->
+
                 <div class="bg-gradient-to-br from-slate-800 to-slate-900 p-5 rounded-xl border border-slate-700">
                     <h4 class="text-slate-300 font-medium mb-2">סיכום שבועי</h4>
                     <div class="flex justify-between items-end">
@@ -593,7 +687,7 @@
                 chartsInstance.push(weightChart);
             }
 
-            if (progressData.strength.length > 0 && progressData.strength[0].prev > 0) {
+            if (progressData.strength.length > 0) {
                 const ctxStrength = document.getElementById('strengthChart').getContext('2d');
                 const strengthChart = new Chart(ctxStrength, {
                     type: 'bar',
@@ -601,28 +695,29 @@
                         labels: progressData.strength.map(d => d.exercise),
                         datasets: [
                             {
-                                label: 'חודש קודם',
+                                label: 'משקל התחלה',
                                 data: progressData.strength.map(d => d.prev),
                                 backgroundColor: '#475569',
-                                borderRadius: { topLeft: 4, topRight: 4 }
+                                borderRadius: 4
                             },
                             {
-                                label: 'נוכחי',
+                                label: 'שיא נוכחי',
                                 data: progressData.strength.map(d => d.current),
                                 backgroundColor: '#3b82f6',
-                                borderRadius: { topLeft: 4, topRight: 4 }
+                                borderRadius: 4
                             }
                         ]
                     },
                     options: {
+                        indexAxis: 'y',
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
                             legend: { position: 'top', labels: { color: '#e2e8f0' } }
                         },
                         scales: {
-                            x: { grid: { display: false, drawBorder: false } },
-                            y: { grid: { color: '#334155', drawBorder: false } }
+                            x: { grid: { color: '#334155', drawBorder: false } },
+                            y: { grid: { display: false, drawBorder: false } }
                         }
                     }
                 });
@@ -653,6 +748,7 @@
             // אם עברנו לטאב הגרפים, נצייר אותם
             if (activeTab === 'progress') {
                 initCharts();
+                updateExerciseDetails(selectedProgressExercise);
             }
         }
 
@@ -664,3 +760,7 @@
     </script>
 </body>
 </html>
+
+
+
+```
