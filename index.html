@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -150,58 +149,112 @@
         };
 
         const nutritionData = {
-            dailyCalories: 2240,
-            dailyProtein: 189,
-            dailyCarbs: 287,
-            dailyFat: 35,
-            meals: [
-                { 
-                    name: 'ארוחה 1', 
-                    time: 'מומלץ לפני אימון', 
-                    items: [
-                        '3 ביצים L + טונה / קוטג\' (2/3 חבילה)',
-                        'פיתות כוסמין (200 גרם)', 
-                        'טחינה (10 גרם) / אבוקדו (25 גרם) / שקדים (10 גרם)'
-                    ], 
-                    calories: 950, 
-                },
-                { 
-                    name: 'ארוחה 2', 
-                    time: '', 
-                    items: [
-                        'חזה עוף (200 גרם) / דג לבן (220 גרם) / בשר רזה/סלמון (180 גרם)',
-                        'אורז (500 גרם) / בטטה/תפוח אדמה/בורגול (550 גרם)',
-                        'סלט - מגוון צבעים! (400 גרם)'
-                    ], 
-                    calories: 1025, 
-                },
-                { 
-                    name: 'ארוחה 3', 
-                    time: '', 
-                    items: [
-                        '2 יוגורטים חלבון / סקופ וחצי אבקת חלבון / 2 חטיפי חלבון',
-                        'תפוח / פרי אחר'
-                    ], 
-                    calories: 265, 
-                }
-            ],
+            trainingDay: {
+                dailyCalories: 2390,
+                dailyProtein: 189,
+                dailyCarbs: 325,
+                dailyFat: 35,
+                meals: [
+                    { 
+                        name: 'ארוחה 1', 
+                        time: 'מומלץ לפני אימון', 
+                        items: [
+                            '3 ביצים L + טונה / קוטג\' (2/3 חבילה)',
+                            'פיתות כוסמין (200 גרם)', 
+                            'טחינה (10 גרם) / אבוקדו (25 גרם) / שקדים (10 גרם)'
+                        ], 
+                        calories: 950, 
+                    },
+                    { 
+                        name: 'ארוחה 2', 
+                        time: 'ארוחת צהריים', 
+                        items: [
+                            'חזה עוף (200 גרם) / דג לבן (220 גרם) / בשר רזה/סלמון (180 גרם)',
+                            'אורז (600 גרם) / בטטה/תפוח אדמה/בורגול (650 גרם)',
+                            'סלט - מגוון צבעים! (400 גרם)'
+                        ], 
+                        calories: 1175, 
+                    },
+                    { 
+                        name: 'ארוחה 3', 
+                        time: '', 
+                        items: [
+                            '2 יוגורטים חלבון / סקופ וחצי אבקת חלבון / 2 חטיפי חלבון',
+                            'תפוח / פרי אחר'
+                        ], 
+                        calories: 265, 
+                    }
+                ],
+                guidelines: [
+                    "לצרוך קפאין כחצי שעה לפני אימון (קפה, משקה אנרגיה).",
+                    "לשתות המון מים לפני האימון.",
+                    "לדאוג לכמות מספקת של מלח בארוחה שלפני האימון.",
+                    "ניתן להחליף מוצרים בתוך אותה קטגוריה בתפריט.",
+                    "מומלץ לאכול את ארוחה 1 לפני אימון.",
+                    "לשמור על מרווח של כמה שעות בין כל ארוחה.",
+                    "להשתמש בספריי שמן אם מטגנים.",
+                    "אם אתה אוכל בחוץ, בחר משהו שנראה כמו בתפריט.",
+                    "יש להגיע לכמות החלבון הנדרשת!",
+                    "ירקות מומלצים מכל הצבעים.",
+                    "עד 50 גרם רטבים.",
+                    "תבלינים באופן חופשי.",
+                    "שתייה - רק זירו. לפחות 2 ליטר מים ביום.",
+                    "סדר הארוחות אינו משנה."
+                ]
+            },
+            restDay: {
+                dailyCalories: 1940,
+                dailyProtein: 189,
+                dailyCarbs: 212,
+                dailyFat: 35,
+                meals: [
+                    { 
+                        name: 'ארוחה 1', 
+                        time: '', 
+                        items: [
+                            '3 ביצים L + טונה / קוטג\' (2/3 חבילה)',
+                            'פיתות כוסמין (200 גרם)', 
+                            'טחינה (10 גרם) / אבוקדו (25 גרם) / שקדים (10 גרם)'
+                        ], 
+                        calories: 950, 
+                    },
+                    { 
+                        name: 'ארוחה 2', 
+                        time: 'ארוחת צהריים', 
+                        items: [
+                            'חזה עוף (200 גרם) / דג לבן (220 גרם) / בשר רזה/סלמון (180 גרם)',
+                            'אורז (250 גרם) / בטטה/תפוח אדמה/בורגול (300 גרם)',
+                            'סלט - מגוון צבעים! (400 גרם)'
+                        ], 
+                        calories: 725, 
+                    },
+                    { 
+                        name: 'ארוחה 3', 
+                        time: '', 
+                        items: [
+                            '2 יוגורטים חלבון / סקופ וחצי אבקת חלבון / 2 חטיפי חלבון',
+                            'תפוח / פרי אחר'
+                        ], 
+                        calories: 265, 
+                    }
+                ],
+                guidelines: [
+                    "ניתן להחליף מוצרים בתוך אותה קטגוריה בתפריט.",
+                    "לשמור על מרווח של כמה שעות בין כל ארוחה.",
+                    "להשתמש בספריי שמן אם מטגנים.",
+                    "אם אתה אוכל בחוץ, בחר משהו שנראה כמו בתפריט.",
+                    "יש להגיע לכמות החלבון הנדרשת!",
+                    "ירקות מומלצים מכל הצבעים.",
+                    "עד 50 גרם רטבים.",
+                    "תבלינים באופן חופשי.",
+                    "שתייה - רק זירו. לפחות 2 ליטר מים ביום.",
+                    "סדר הארוחות אינו משנה."
+                ]
+            },
             treatsAllowance: {
                 calories: 150,
                 text: "לכל מה שלא חלק מהתפריט (רטבים, מתוק, חלבון נוסף)."
-            },
-            guidelines: [
-                "ניתן להחליף מוצרים בתוך אותה קטגוריה בתפריט.",
-                "מומלץ לאכול את ארוחה 1 לפני אימון.",
-                "לשמור על מרווח של כמה שעות בין כל ארוחה.",
-                "להשתמש בספריי שמן אם מטגנים.",
-                "אם אתה אוכל בחוץ, בחר משהו שנראה כמו בתפריט.",
-                "יש להגיע לכמות החלבון הנדרשת!",
-                "ירקות מומלצים מכל הצבעים.",
-                "עד 50 גרם רטבים.",
-                "תבלינים באופן חופשי.",
-                "שתייה - רק זירו. לפחות 2 ליטר מים ביום.",
-                "סדר הארוחות אינו משנה."
-            ]
+            }
         };
 
         const videosData = [];
@@ -244,12 +297,18 @@
         let expandedExercise = null;
         let chartsInstance = [];
         let selectedProgressExercise = progressData.strength[0]?.exercise || '';
+        let activeNutritionTab = 'trainingDay'; // ברירת מחדל: יום אימון
 
         // --- פונקציות עזר ורינדור ---
 
         function setTab(tabName) {
             activeTab = tabName;
             expandedExercise = null; // סגירת תרגילים פתוחים במעבר מסך
+            render();
+        }
+
+        function setNutritionTab(tabName) {
+            activeNutritionTab = tabName;
             render();
         }
 
@@ -452,44 +511,57 @@
         }
 
         function renderNutrition() {
+            const currentData = nutritionData[activeNutritionTab];
+            const isTraining = activeNutritionTab === 'trainingDay';
+
             return `
             <div class="space-y-6 fade-in-zoom">
+                
+                <!-- Nutrition Type Toggle -->
+                <div class="bg-slate-900 p-1 rounded-xl flex border border-slate-700 w-full mb-6 relative shadow-inner">
+                    <button onclick="setNutritionTab('trainingDay')" class="flex-1 py-2 rounded-lg text-sm font-bold transition-all z-10 ${isTraining ? 'bg-emerald-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}">
+                        יום אימון 🔥
+                    </button>
+                    <button onclick="setNutritionTab('restDay')" class="flex-1 py-2 rounded-lg text-sm font-bold transition-all z-10 ${!isTraining ? 'bg-blue-500 text-slate-950 shadow-md' : 'text-slate-400 hover:text-slate-200'}">
+                        יום מנוחה 🛋️
+                    </button>
+                </div>
+
                 <div class="grid grid-cols-2 gap-4">
                     <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 text-center relative overflow-hidden">
                         <div class="relative z-10">
                             <span class="text-slate-400 text-xs">יעד קלורי</span>
-                            <div class="text-2xl font-bold text-emerald-400">${nutritionData.dailyCalories}</div>
+                            <div class="text-2xl font-bold ${isTraining ? 'text-emerald-400' : 'text-blue-400'}">${currentData.dailyCalories}</div>
                         </div>
-                        <div class="absolute top-0 right-0 w-12 h-12 bg-emerald-500/10 rounded-bl-3xl"></div>
+                        <div class="absolute top-0 right-0 w-12 h-12 ${isTraining ? 'bg-emerald-500/10' : 'bg-blue-500/10'} rounded-bl-3xl"></div>
                     </div>
                     <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 text-center relative overflow-hidden">
                         <div class="relative z-10">
                             <span class="text-slate-400 text-xs">חלבון (g)</span>
-                            <div class="text-2xl font-bold text-blue-400">${nutritionData.dailyProtein}</div>
+                            <div class="text-2xl font-bold text-slate-100">${currentData.dailyProtein}</div>
                         </div>
-                        <div class="absolute top-0 right-0 w-12 h-12 bg-blue-500/10 rounded-bl-3xl"></div>
                     </div>
                     <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 text-center relative overflow-hidden">
                         <div class="relative z-10">
                             <span class="text-slate-400 text-xs">פחמימה (g)</span>
-                            <div class="text-xl font-bold text-orange-400">${nutritionData.dailyCarbs}</div>
+                            <div class="text-xl font-bold text-orange-400">${currentData.dailyCarbs}</div>
                         </div>
                     </div>
                     <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 text-center relative overflow-hidden">
                         <div class="relative z-10">
                             <span class="text-slate-400 text-xs">שומן (g)</span>
-                            <div class="text-xl font-bold text-yellow-400">${nutritionData.dailyFat}</div>
+                            <div class="text-xl font-bold text-yellow-400">${currentData.dailyFat}</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="space-y-4">
-                    ${nutritionData.meals.map(meal => `
+                    ${currentData.meals.map(meal => `
                         <div class="bg-slate-800 rounded-xl border border-slate-700 p-4 relative overflow-hidden">
                             <div class="flex justify-between items-start mb-3 relative z-10">
                                 <div>
                                     <h4 class="font-bold text-slate-100">${meal.name}</h4>
-                                    ${meal.time ? `<p class="text-xs text-emerald-400 font-medium">${meal.time}</p>` : ''}
+                                    ${meal.time ? `<p class="text-xs ${isTraining && meal.time.includes('אימון') ? 'text-emerald-400' : 'text-blue-400'} font-medium">${meal.time}</p>` : ''}
                                 </div>
                                 <div class="text-right">
                                     <span class="block text-sm font-bold text-slate-200">~${meal.calories} קלוריות</span>
@@ -530,10 +602,10 @@
                         דגשים וכללי ברזל
                     </h4>
                     <ul class="space-y-3">
-                        ${nutritionData.guidelines.map(line => `
+                        ${currentData.guidelines.map((line, idx) => `
                             <li class="text-sm text-slate-400 flex gap-3 items-start">
-                                <span class="text-blue-500 mt-1 font-bold">•</span>
-                                <span class="leading-relaxed">${line}</span>
+                                <span class="${idx < 3 && isTraining ? 'text-emerald-400' : 'text-blue-500'} mt-1 font-bold">•</span>
+                                <span class="leading-relaxed ${idx < 3 && isTraining ? 'font-semibold text-slate-300' : ''}">${line}</span>
                             </li>
                         `).join('')}
                     </ul>
@@ -760,6 +832,7 @@
     </script>
 </body>
 </html>
+
 
 
 
